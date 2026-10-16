@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Premium | Concesionario</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: #1c2430; line-height: 1.6; }
+    header { background: #0b1f3a; color: #fff; padding: 20px; text-align: center; }
+    header h1 { letter-spacing: 4px; font-size: 2rem; }
+    header p { color: #aebdd3; font-size: 0.9rem; }
+    nav { background: #14305a; text-align: center; padding: 10px; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.95rem; cursor: pointer; }
+    nav a:hover { color: #ffb703; }
+    .hero { display: flex; flex-wrap: wrap; align-items: center; max-width: 1000px; margin: 40px auto; padding: 0 20px; gap: 30px; }
+    .hero .texto { flex: 1 1 350px; }
+    .hero h2 { font-size: 1.8rem; margin-bottom: 15px; color: #0b1f3a; }
+    .hero p { margin-bottom: 12px; }
+    .boton { display: inline-block; background: #ffb703; color: #0b1f3a; padding: 10px 25px; border-radius: 25px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; font-size: 1rem; }
+    .boton:hover { background: #e6a200; }
+    .categorias { background: #eef2f7; padding: 40px 20px; text-align: center; }
+    .categorias h2 { margin-bottom: 25px; color: #0b1f3a; }
+    .lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .tarjeta { background: #fff; padding: 25px; border-radius: 10px; width: 200px; box-shadow: 0 2px 8px rgba(0,0,0,.12); border: none; cursor: pointer; font-size: 1rem; color: inherit; transition: transform .2s; }
+    .tarjeta:hover { transform: translateY(-5px); }
+    .tarjeta .emoji { font-size: 2.5rem; display: block; }
+    .catalogo { display: none; max-width: 1100px; margin: 0 auto; padding: 50px 20px; text-align: center; }
+    .catalogo.visible { display: block; }
+    .catalogo h2 { margin-bottom: 20px; color: #0b1f3a; }
+    .filtros { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
+    .filtro { background: #fff; border: 2px solid #0b1f3a; color: #0b1f3a; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: 0.95rem; }
+    .filtro.activo, .filtro:hover { background: #0b1f3a; color: #fff; }
+    .productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+    .producto { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.15); text-align: left; }
+    .producto .info { padding: 15px; }
+    .producto h3 { font-size: 1.05rem; }
+    .producto .tipo { color: #7b8794; font-size: 0.85rem; }
+    .producto .precio { font-weight: bold; color: #14305a; margin-top: 5px; }
+    footer { background: #0b1f3a; color: #dbe4f0; text-align: center; padding: 30px 20px; }
+    footer h3 { margin-bottom: 10px; color: #ffb703; }
+    footer a { color: #ffb703; text-decoration: none; }
+    footer small { display: block; margin-top: 15px; color: #8a9bb3; }
+    .foto { position: relative; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: linear-gradient(135deg,#e3eaf4,#c3d0e3); overflow: hidden; }
+    .foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .producto .foto { height: 200px; }
+    .hero .portada { flex: 1 1 350px; min-height: 280px; font-size: 7rem; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>AUTO PREMIUM</h1>
+    <p>Creado por: Gohan Vanegas 11-5</p>
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#categorias">Categorías</a>
+    <a onclick="mostrarCatalogo('Todo')">Catálogo</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <div class="foto portada"><span>🚘</span><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800" alt="Auto en exhibición" onerror="this.remove()"></div>
+    <div class="texto">
+      <h2>Idea del proyecto</h2>
+      <p>Auto Premium es un concesionario de vehículos nuevos y usados donde los clientes pueden ver el inventario, conocer los precios y agendar una prueba de manejo en línea.</p>
+      <p>La idea es construir la página en <strong>React</strong>, con componentes para el catálogo de vehículos, los filtros por tipo y el formulario para agendar citas.</p>
+      <button class="boton" onclick="mostrarCatalogo('Todo')">Conoce nuestro catálogo</button>
+    </div>
+  </section>
+
+  <section class="categorias" id="categorias">
+    <h2>Nuestras categorías</h2>
+    <div class="lista">
+      <button class="tarjeta" onclick="mostrarCatalogo('SUV')"><span class="emoji">🚙</span><h3>SUV</h3></button>
+      <button class="tarjeta" onclick="mostrarCatalogo('Sedanes')"><span class="emoji">🚗</span><h3>Sedanes</h3></button>
+      <button class="tarjeta" onclick="mostrarCatalogo('Camionetas')"><span class="emoji">🛻</span><h3>Camionetas</h3></button>
+      <button class="tarjeta" onclick="mostrarCatalogo('Deportivos')"><span class="emoji">🏎️</span><h3>Deportivos</h3></button>
+    </div>
+  </section>
+
+  <section class="catalogo" id="catalogo">
+    <h2>Catálogo</h2>
+    <div class="filtros" id="filtros"></div>
+    <div class="productos" id="productos"></div>
+  </section>
+
+  <footer id="contacto">
+    <h3>Contacto</h3>
+    <p>📧 <a href="mailto:ventas@autopremium.com">ventas@autopremium.com</a></p>
+    <p>📱 +57 333 274 5448</p>
+    <p>📍 Medellín, Colombia</p>
+    <p>🕒 Lunes a sábado: 8:00 am – 6:00 pm</p>
+    <small>© 2026 Auto Premium. Todos los derechos reservados.</small>
+  </footer>
+
+  <script>
+    const U = id => `https://images.unsplash.com/photo-${id}?w=600&h=450&fit=crop`;
+
+    // Fotos de Unsplash. Si alguna no carga, se muestra el emoji.
+    // Para usar fotos propias, cambia el "img" por una ruta local (ej. 'img/foto.jpg').
+    const vehiculos = [
+      { nombre: 'SUV Familiar 7 Puestos', tipo: 'SUV', precio: 145000000, emoji: '🚙', img: U('1519641471654-76ce0107ad1b') },
+      { nombre: 'SUV Compacta Urbana', tipo: 'SUV', precio: 98000000, emoji: '🚙', img: U('1533473359331-0135ef1b58bf') },
+      { nombre: 'SUV Híbrida', tipo: 'SUV', precio: 175000000, emoji: '🚙', img: U('1549317661-bd32c8ce0db2') },
+      { nombre: 'Sedán Ejecutivo', tipo: 'Sedanes', precio: 120000000, emoji: '🚗', img: U('1555215695-3004980ad54e') },
+      { nombre: 'Sedán Económico', tipo: 'Sedanes', precio: 72000000, emoji: '🚗', img: U('1492144534655-ae79c964c9d7') },
+      { nombre: 'Sedán Eléctrico', tipo: 'Sedanes', precio: 190000000, emoji: '🚗', img: U('1542362567-b07e54358753') },
+      { nombre: 'Camioneta 4x4 Doble Cabina', tipo: 'Camionetas', precio: 210000000, emoji: '🛻', img: U('1559416523-140ddc3d238c') },
+      { nombre: 'Camioneta de Carga', tipo: 'Camionetas', precio: 135000000, emoji: '🛻', img: U('1590362891991-f776e747a588') },
+      { nombre: 'Pickup Todo Terreno', tipo: 'Camionetas', precio: 185000000, emoji: '🛻', img: U('1551830820-330a71b99659') },
+      { nombre: 'Deportivo Rojo', tipo: 'Deportivos', precio: 480000000, emoji: '🏎️', img: U('1583121274602-3e2820c69888') },
+      { nombre: 'Coupé Clásico', tipo: 'Deportivos', precio: 350000000, emoji: '🏎️', img: U('1494976388531-d1058494cdd8') },
+      { nombre: 'Deportivo Convertible', tipo: 'Deportivos', precio: 420000000, emoji: '🏎️', img: U('1552519507-da3b142c6e3d') }
+    ];
+
+    const categorias = ['Todo', 'SUV', 'Sedanes', 'Camionetas', 'Deportivos'];
+    const formato = n => '$' + n.toLocaleString('es-CO');
+
+    function mostrarCatalogo(filtro) {
+      document.getElementById('catalogo').classList.add('visible');
+
+      document.getElementById('filtros').innerHTML = categorias.map(c =>
+        `<button class="filtro ${c === filtro ? 'activo' : ''}" onclick="mostrarCatalogo('${c}')">${c}</button>`
+      ).join('');
+
+      const lista = filtro === 'Todo' ? vehiculos : vehiculos.filter(v => v.tipo === filtro);
+      document.getElementById('productos').innerHTML = lista.map(v => `
+        <article class="producto">
+          <div class="foto"><span>${v.emoji}</span><img src="${v.img}" alt="${v.nombre}" onerror="this.remove()"></div>
+          <div class="info">
+            <h3>${v.nombre}</h3>
+            <div class="tipo">${v.tipo}</div>
+            <div class="precio">${formato(v.precio)}</div>
+          </div>
+        </article>`).join('');
+
+      document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
