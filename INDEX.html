@@ -4,117 +4,230 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auto Premium | Concesionario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --grafito: #0f1720;
+      --azul: #1769ff;
+      --azul-oscuro: #0d47b8;
+      --plata: #f1f4f8;
+      --linea: #dde3ea;
+      --rojo: #ff3b30;
+      --titulo: 'Oswald', 'Arial Narrow', Impact, sans-serif;
+      --texto: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; color: #1c2430; line-height: 1.6; }
-    header { background: #0b1f3a; color: #fff; padding: 20px; text-align: center; }
-    header h1 { letter-spacing: 4px; font-size: 2rem; }
-    header p { color: #aebdd3; font-size: 0.9rem; }
-    nav { background: #14305a; text-align: center; padding: 10px; position: sticky; top: 0; z-index: 10; }
-    nav a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.95rem; cursor: pointer; }
-    nav a:hover { color: #ffb703; }
-    .hero { display: flex; flex-wrap: wrap; align-items: center; max-width: 1000px; margin: 40px auto; padding: 0 20px; gap: 30px; }
-    .hero .texto { flex: 1 1 350px; }
-    .hero h2 { font-size: 1.8rem; margin-bottom: 15px; color: #0b1f3a; }
-    .hero p { margin-bottom: 12px; }
-    .boton { display: inline-block; background: #ffb703; color: #0b1f3a; padding: 10px 25px; border-radius: 25px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; font-size: 1rem; }
-    .boton:hover { background: #e6a200; }
-    .categorias { background: #eef2f7; padding: 40px 20px; text-align: center; }
-    .categorias h2 { margin-bottom: 25px; color: #0b1f3a; }
-    .lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .tarjeta { background: #fff; padding: 25px; border-radius: 10px; width: 200px; box-shadow: 0 2px 8px rgba(0,0,0,.12); border: none; cursor: pointer; font-size: 1rem; color: inherit; transition: transform .2s; }
-    .tarjeta:hover { transform: translateY(-5px); }
-    .tarjeta .emoji { font-size: 2.5rem; display: block; }
-    .catalogo { display: none; max-width: 1100px; margin: 0 auto; padding: 50px 20px; text-align: center; }
+    body { font-family: var(--texto); color: var(--grafito); background: #fff; line-height: 1.6; }
+
+   
+    .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px 5%; background: #fff; border-bottom: 1px solid var(--linea); }
+    .logo { font-family: var(--titulo); font-size: 1.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: var(--grafito); }
+    .logo span { color: var(--azul); }
+    .menu-links a { color: var(--grafito); text-decoration: none; font-weight: 500; font-size: 0.92rem; margin: 0 16px; cursor: pointer; }
+    .menu-links a:hover { color: var(--azul); }
+    .cta { background: var(--azul); color: #fff; border: none; padding: 11px 24px; border-radius: 6px; font-family: var(--texto); font-weight: 700; font-size: 0.9rem; cursor: pointer; text-decoration: none; transition: .2s; }
+    .cta:hover { background: var(--azul-oscuro); }
+
+    .hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; background: var(--grafito); color: #fff; overflow: hidden; }
+    .hero .texto { padding: 70px 5% 70px 8%; position: relative; z-index: 2; align-self: center; }
+    .etiqueta { display: inline-block; background: rgba(23,105,255,.2); color: #8fb7ff; border: 1px solid var(--azul); padding: 4px 14px; border-radius: 30px; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 20px; }
+    .hero h1 { font-family: var(--titulo); font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.02; text-transform: uppercase; margin-bottom: 18px; }
+    .hero h1 em { color: var(--azul); font-style: normal; }
+    .hero p { color: #b8c4d4; max-width: 460px; margin-bottom: 28px; }
+    .hero .foto-hero { position: absolute; top: 0; right: 0; bottom: 0; width: 58%; clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%); background: linear-gradient(135deg, #1b2a3d, #0b1119); display: flex; align-items: center; justify-content: center; font-size: 9rem; }
+    .hero .foto-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .btn-fila { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-claro { background: transparent; border: 2px solid #fff; color: #fff; padding: 11px 24px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer; text-decoration: none; }
+    .btn-claro:hover { background: #fff; color: var(--grafito); }
+
+    .cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); background: var(--azul); color: #fff; text-align: center; }
+    .cifras div { padding: 28px 10px; border-right: 1px solid rgba(255,255,255,.2); }
+    .cifras div:last-child { border-right: none; }
+    .cifras strong { display: block; font-family: var(--titulo); font-size: 2.4rem; line-height: 1.1; }
+    .cifras span { font-size: 0.85rem; opacity: .85; }
+
+   
+    section { padding: 80px 5%; }
+    .contenedor { max-width: 1100px; margin: 0 auto; }
+    .sobre-titulo { color: var(--azul); font-weight: 700; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+    h2.titulo { font-family: var(--titulo); font-size: 2.4rem; text-transform: uppercase; line-height: 1.15; margin-bottom: 18px; }
+
+ 
+    .historia { background: var(--plata); }
+    .historia .intro { max-width: 720px; color: #4a5766; margin-bottom: 45px; }
+    .linea-tiempo { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px; position: relative; }
+    .hito { background: #fff; border-radius: 10px; padding: 24px; border-top: 4px solid var(--azul); box-shadow: 0 2px 10px rgba(15,23,32,.08); }
+    .hito .anio { font-family: var(--titulo); font-size: 2rem; color: var(--azul); }
+    .hito h3 { font-size: 1rem; margin-bottom: 6px; }
+    .hito p { font-size: 0.9rem; color: #5a6776; }
+
+    .idea { padding: 0 5%; margin: 80px 0; }
+    .idea .caja { max-width: 1100px; margin: 0 auto; background: linear-gradient(120deg, var(--grafito), #1b2d4a); color: #fff; border-radius: 14px; padding: 45px 50px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 35px; align-items: center; }
+    .idea h2 { font-family: var(--titulo); font-size: 2rem; text-transform: uppercase; }
+    .idea p { color: #c4d0e0; margin-bottom: 10px; }
+    .idea strong { color: #8fb7ff; }
+
+
+    .categorias { padding-top: 0; }
+    .fila-cat { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+    .cat { display: flex; align-items: center; gap: 16px; text-align: left; background: #fff; border: 2px solid var(--linea); border-radius: 12px; padding: 20px; cursor: pointer; font-family: var(--texto); transition: .2s; }
+    .cat:hover { border-color: var(--azul); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(23,105,255,.18); }
+    .cat .icono { font-size: 2.4rem; background: var(--plata); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: 0 0 64px; }
+    .cat h3 { font-family: var(--titulo); font-size: 1.25rem; text-transform: uppercase; }
+    .cat small { color: #7a8794; }
+
+    /* Catálogo */
+    .catalogo { display: none; background: var(--plata); }
     .catalogo.visible { display: block; }
-    .catalogo h2 { margin-bottom: 20px; color: #0b1f3a; }
-    .filtros { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
-    .filtro { background: #fff; border: 2px solid #0b1f3a; color: #0b1f3a; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: 0.95rem; }
-    .filtro.activo, .filtro:hover { background: #0b1f3a; color: #fff; }
-    .productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-    .producto { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.15); text-align: left; }
-    .producto .info { padding: 15px; }
-    .producto h3 { font-size: 1.05rem; }
-    .producto .tipo { color: #7b8794; font-size: 0.85rem; }
-    .producto .precio { font-weight: bold; color: #14305a; margin-top: 5px; }
-    footer { background: #0b1f3a; color: #dbe4f0; text-align: center; padding: 30px 20px; }
-    footer h3 { margin-bottom: 10px; color: #ffb703; }
-    footer a { color: #ffb703; text-decoration: none; }
-    footer small { display: block; margin-top: 15px; color: #8a9bb3; }
-    .foto { position: relative; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: linear-gradient(135deg,#e3eaf4,#c3d0e3); overflow: hidden; }
-    .foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .producto .foto { height: 200px; }
-    .hero .portada { flex: 1 1 350px; min-height: 280px; font-size: 7rem; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+    .filtros { display: inline-flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--linea); border-radius: 10px; padding: 5px; gap: 4px; margin-bottom: 35px; }
+    .filtro { background: none; border: none; padding: 9px 20px; border-radius: 7px; font-family: var(--texto); font-weight: 500; font-size: 0.92rem; cursor: pointer; color: #4a5766; }
+    .filtro:hover { color: var(--azul); }
+    .filtro.activo { background: var(--grafito); color: #fff; }
+    .vehiculos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+    .vehiculo { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 14px rgba(15,23,32,.1); display: flex; flex-direction: column; }
+    .vehiculo .foto { position: relative; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: linear-gradient(135deg, #e6ecf4, #cdd7e4); }
+    .vehiculo .foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .insignia { position: absolute; top: 12px; left: 12px; z-index: 2; background: var(--azul); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; padding: 4px 12px; border-radius: 30px; text-transform: uppercase; }
+    .insignia.usado { background: var(--rojo); }
+    .vehiculo .cuerpo { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .vehiculo h3 { font-family: var(--titulo); font-size: 1.3rem; text-transform: uppercase; line-height: 1.2; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chips span { background: var(--plata); border-radius: 6px; padding: 3px 10px; font-size: 0.78rem; color: #4a5766; }
+    .vehiculo .pie { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--linea); }
+    .precio { font-family: var(--titulo); font-size: 1.45rem; color: var(--azul); }
+    .vehiculo .pie a { font-size: 0.85rem; font-weight: 700; color: var(--grafito); text-decoration: none; border: 2px solid var(--grafito); padding: 6px 14px; border-radius: 6px; }
+    .vehiculo .pie a:hover { background: var(--grafito); color: #fff; }
+
+    footer { background: var(--grafito); color: #c4d0e0; }
+    .banda { background: var(--azul); color: #fff; text-align: center; padding: 45px 5%; }
+    .banda h2 { font-family: var(--titulo); font-size: 2rem; text-transform: uppercase; margin-bottom: 8px; }
+    .datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; padding: 50px 5% 20px; }
+    .datos div { border-left: 3px solid var(--azul); padding-left: 16px; }
+    .datos h3 { font-family: var(--titulo); text-transform: uppercase; color: #fff; letter-spacing: 1px; margin-bottom: 6px; }
+    .datos a { color: #8fb7ff; text-decoration: none; }
+    footer small { display: block; text-align: center; padding: 20px; color: #6f7f93; }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero .foto-hero { position: relative; width: 100%; height: 260px; clip-path: none; order: -1; }
+      .hero .texto { padding: 40px 6%; }
+      .idea .caja { grid-template-columns: 1fr; padding: 30px; }
+      .menu-links { display: none; }
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>AUTO PREMIUM</h1>
-    <p>Creado por: Gohan Vanegas 11-5</p>
+  <div class="topbar">
+    <a class="logo" href="#inicio">Auto<span>Premium</span></a>
+    <div class="menu-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#historia">Historia</a>
+      <a href="#categorias">Categorías</a>
+      <a onclick="mostrarCatalogo('Todo')">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a class="cta" href="#contacto">Agendar prueba</a>
+  </div>
+
+  <header class="hero" id="inicio">
+    <div class="texto">
+      <span class="etiqueta">Creado por: Gohan Vanegas</span>
+      <h1>Encuentra el carro <em>que va contigo</em></h1>
+      <p>Vehículos nuevos y usados con garantía, financiación a tu medida y asesoría de principio a fin.</p>
+      <div class="btn-fila">
+        <button class="cta" onclick="mostrarCatalogo('Todo')">Conoce nuestro catálogo</button>
+        <a class="btn-claro" href="#historia">Nuestra historia</a>
+      </div>
+    </div>
+    <div class="foto-hero"><span>🚘</span><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400" alt="Auto en exhibición" onerror="this.remove()"></div>
   </header>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#categorias">Categorías</a>
-    <a onclick="mostrarCatalogo('Todo')">Catálogo</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+  <div class="cifras">
+    <div><strong>25+</strong><span>años en el mercado</span></div>
+    <div><strong>3.000</strong><span>vehículos entregados</span></div>
+    <div><strong>12</strong><span>marcas disponibles</span></div>
+    <div><strong>100%</strong><span>con garantía</span></div>
+  </div>
 
-  <section class="hero" id="inicio">
-    <div class="foto portada"><span>🚘</span><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800" alt="Auto en exhibición" onerror="this.remove()"></div>
-    <div class="texto">
-      <h2>Idea del proyecto</h2>
-      <p>Auto Premium es un concesionario de vehículos nuevos y usados donde los clientes pueden ver el inventario, conocer los precios y agendar una prueba de manejo en línea.</p>
-      <p>La idea es construir la página en <strong>React</strong>, con componentes para el catálogo de vehículos, los filtros por tipo y el formulario para agendar citas.</p>
-      <button class="boton" onclick="mostrarCatalogo('Todo')">Conoce nuestro catálogo</button>
+  <section class="historia" id="historia">
+    <div class="contenedor">
+      <p class="sobre-titulo">Nuestra historia</p>
+      <h2 class="titulo">De un pequeño patio a un concesionario de confianza</h2>
+      <p class="intro">Auto Premium empezó con una idea sencilla: que comprar un carro no fuera un dolor de cabeza. Hemos crecido paso a paso, siempre con la misma regla: decir la verdad sobre cada vehículo y acompañar al cliente incluso después de la venta.</p>
+      <div class="linea-tiempo">
+        <div class="hito"><div class="anio">2001</div><h3>Abrimos puertas</h3><p>Iniciamos con un patio pequeño y diez vehículos usados en Medellín.</p></div>
+        <div class="hito"><div class="anio">2010</div><h3>Primeros nuevos</h3><p>Nos convertimos en concesionario autorizado de vehículos nuevos.</p></div>
+        <div class="hito"><div class="anio">2018</div><h3>Llegan los eléctricos</h3><p>Sumamos modelos híbridos y eléctricos a nuestro inventario.</p></div>
+        <div class="hito"><div class="anio">2026</div><h3>Hoy</h3><p>Más de 3.000 familias nos han confiado su carro.</p></div>
+      </div>
     </div>
   </section>
 
+  <div class="idea">
+    <div class="caja">
+      <h2>Idea del proyecto</h2>
+      <div>
+        <p>Auto Premium es un concesionario de vehículos nuevos y usados donde los clientes pueden ver el inventario, conocer los precios y agendar una prueba de manejo en línea.</p>
+        <p>La idea es construir la página en <strong>React</strong>, con componentes para el catálogo de vehículos, los filtros por tipo y el formulario para agendar citas.</p>
+      </div>
+    </div>
+  </div>
+
   <section class="categorias" id="categorias">
-    <h2>Nuestras categorías</h2>
-    <div class="lista">
-      <button class="tarjeta" onclick="mostrarCatalogo('SUV')"><span class="emoji">🚙</span><h3>SUV</h3></button>
-      <button class="tarjeta" onclick="mostrarCatalogo('Sedanes')"><span class="emoji">🚗</span><h3>Sedanes</h3></button>
-      <button class="tarjeta" onclick="mostrarCatalogo('Camionetas')"><span class="emoji">🛻</span><h3>Camionetas</h3></button>
-      <button class="tarjeta" onclick="mostrarCatalogo('Deportivos')"><span class="emoji">🏎️</span><h3>Deportivos</h3></button>
+    <div class="contenedor">
+      <p class="sobre-titulo">Explora por tipo</p>
+      <h2 class="titulo">Nuestras categorías</h2>
+      <div class="fila-cat">
+        <button class="cat" onclick="mostrarCatalogo('SUV')"><span class="icono">🚙</span><div><h3>SUV</h3><small>3 modelos</small></div></button>
+        <button class="cat" onclick="mostrarCatalogo('Sedanes')"><span class="icono">🚗</span><div><h3>Sedanes</h3><small>3 modelos</small></div></button>
+        <button class="cat" onclick="mostrarCatalogo('Camionetas')"><span class="icono">🛻</span><div><h3>Camionetas</h3><small>3 modelos</small></div></button>
+        <button class="cat" onclick="mostrarCatalogo('Deportivos')"><span class="icono">🏎️</span><div><h3>Deportivos</h3><small>3 modelos</small></div></button>
+      </div>
     </div>
   </section>
 
   <section class="catalogo" id="catalogo">
-    <h2>Catálogo</h2>
-    <div class="filtros" id="filtros"></div>
-    <div class="productos" id="productos"></div>
+    <div class="contenedor">
+      <p class="sobre-titulo">Inventario</p>
+      <h2 class="titulo">Catálogo de vehículos</h2>
+      <div class="filtros" id="filtros"></div>
+      <div class="vehiculos" id="productos"></div>
+    </div>
   </section>
 
   <footer id="contacto">
-    <h3>Contacto</h3>
-    <p>📧 <a href="mailto:ventas@autopremium.com">ventas@autopremium.com</a></p>
-    <p>📱 +57 333 274 5448</p>
-    <p>📍 Medellín, Colombia</p>
-    <p>🕒 Lunes a sábado: 8:00 am – 6:00 pm</p>
+    <div class="banda">
+      <h2>¿Listo para tu próximo carro?</h2>
+      <p>Escríbenos o visítanos y agenda tu prueba de manejo.</p>
+    </div>
+    <div class="datos">
+      <div><h3>Contacto</h3><p>📧 <a href="mailto:ventas@autopremium.com">ventas@autopremium.com</a></p><p>📱 +57 300 000 0000</p></div>
+      <div><h3>Horario</h3><p>🕒 Lunes a sábado</p><p>8:00 am – 6:00 pm</p></div>
+      <div><h3>Ubicación</h3><p>📍 Medellín, Colombia</p></div>
+    </div>
     <small>© 2026 Auto Premium. Todos los derechos reservados.</small>
   </footer>
 
   <script>
-    const U = id => `https://images.unsplash.com/photo-${id}?w=600&h=450&fit=crop`;
+    const U = id => `https://images.unsplash.com/photo-${id}?w=700&h=450&fit=crop`;
 
-    // Fotos de Unsplash. Si alguna no carga, se muestra el emoji.
-    // Para usar fotos propias, cambia el "img" por una ruta local (ej. 'img/foto.jpg').
+  
     const vehiculos = [
-      { nombre: 'SUV Familiar 7 Puestos', tipo: 'SUV', precio: 145000000, emoji: '🚙', img: U('1519641471654-76ce0107ad1b') },
-      { nombre: 'SUV Compacta Urbana', tipo: 'SUV', precio: 98000000, emoji: '🚙', img: U('1533473359331-0135ef1b58bf') },
-      { nombre: 'SUV Híbrida', tipo: 'SUV', precio: 175000000, emoji: '🚙', img: U('1549317661-bd32c8ce0db2') },
-      { nombre: 'Sedán Ejecutivo', tipo: 'Sedanes', precio: 120000000, emoji: '🚗', img: U('1555215695-3004980ad54e') },
-      { nombre: 'Sedán Económico', tipo: 'Sedanes', precio: 72000000, emoji: '🚗', img: U('1492144534655-ae79c964c9d7') },
-      { nombre: 'Sedán Eléctrico', tipo: 'Sedanes', precio: 190000000, emoji: '🚗', img: U('1542362567-b07e54358753') },
-      { nombre: 'Camioneta 4x4 Doble Cabina', tipo: 'Camionetas', precio: 210000000, emoji: '🛻', img: U('1559416523-140ddc3d238c') },
-      { nombre: 'Camioneta de Carga', tipo: 'Camionetas', precio: 135000000, emoji: '🛻', img: U('1590362891991-f776e747a588') },
-      { nombre: 'Pickup Todo Terreno', tipo: 'Camionetas', precio: 185000000, emoji: '🛻', img: U('1551830820-330a71b99659') },
-      { nombre: 'Deportivo Rojo', tipo: 'Deportivos', precio: 480000000, emoji: '🏎️', img: U('1583121274602-3e2820c69888') },
-      { nombre: 'Coupé Clásico', tipo: 'Deportivos', precio: 350000000, emoji: '🏎️', img: U('1494976388531-d1058494cdd8') },
-      { nombre: 'Deportivo Convertible', tipo: 'Deportivos', precio: 420000000, emoji: '🏎️', img: U('1552519507-da3b142c6e3d') }
+      { nombre: 'SUV Familiar 7 Puestos', tipo: 'SUV', precio: 145000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Gasolina', trans: 'Automática', emoji: '🚙', img: U('1519641471654-76ce0107ad1b') },
+      { nombre: 'SUV Compacta Urbana', tipo: 'SUV', precio: 98000000, estado: 'Usado', anio: 2022, km: '32.000 km', comb: 'Gasolina', trans: 'Mecánica', emoji: '🚙', img: U('1533473359331-0135ef1b58bf') },
+      { nombre: 'SUV Híbrida', tipo: 'SUV', precio: 175000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Híbrido', trans: 'Automática', emoji: '🚙', img: U('1549317661-bd32c8ce0db2') },
+      { nombre: 'Sedán Ejecutivo', tipo: 'Sedanes', precio: 120000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Gasolina', trans: 'Automática', emoji: '🚗', img: U('1555215695-3004980ad54e') },
+      { nombre: 'Sedán Económico', tipo: 'Sedanes', precio: 72000000, estado: 'Usado', anio: 2021, km: '45.000 km', comb: 'Gasolina', trans: 'Mecánica', emoji: '🚗', img: U('1492144534655-ae79c964c9d7') },
+      { nombre: 'Sedán Eléctrico', tipo: 'Sedanes', precio: 190000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Eléctrico', trans: 'Automática', emoji: '🚗', img: U('1542362567-b07e54358753') },
+      { nombre: 'Camioneta 4x4 Doble Cabina', tipo: 'Camionetas', precio: 210000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Diésel', trans: 'Automática', emoji: '🛻', img: U('1559416523-140ddc3d238c') },
+      { nombre: 'Camioneta de Carga', tipo: 'Camionetas', precio: 135000000, estado: 'Usado', anio: 2020, km: '78.000 km', comb: 'Diésel', trans: 'Mecánica', emoji: '🛻', img: U('1590362891991-f776e747a588') },
+      { nombre: 'Pickup Todo Terreno', tipo: 'Camionetas', precio: 185000000, estado: 'Nuevo', anio: 2025, km: '0 km', comb: 'Diésel', trans: 'Automática', emoji: '🛻', img: U('1551830820-330a71b99659') },
+      { nombre: 'Deportivo Rojo', tipo: 'Deportivos', precio: 480000000, estado: 'Nuevo', anio: 2026, km: '0 km', comb: 'Gasolina', trans: 'Automática', emoji: '🏎️', img: U('1583121274602-3e2820c69888') },
+      { nombre: 'Coupé Clásico', tipo: 'Deportivos', precio: 350000000, estado: 'Usado', anio: 2019, km: '28.000 km', comb: 'Gasolina', trans: 'Mecánica', emoji: '🏎️', img: U('1494976388531-d1058494cdd8') },
+      { nombre: 'Deportivo Convertible', tipo: 'Deportivos', precio: 420000000, estado: 'Nuevo', anio: 2025, km: '0 km', comb: 'Gasolina', trans: 'Automática', emoji: '🏎️', img: U('1552519507-da3b142c6e3d') }
     ];
 
     const categorias = ['Todo', 'SUV', 'Sedanes', 'Camionetas', 'Deportivos'];
@@ -129,12 +242,19 @@
 
       const lista = filtro === 'Todo' ? vehiculos : vehiculos.filter(v => v.tipo === filtro);
       document.getElementById('productos').innerHTML = lista.map(v => `
-        <article class="producto">
-          <div class="foto"><span>${v.emoji}</span><img src="${v.img}" alt="${v.nombre}" onerror="this.remove()"></div>
-          <div class="info">
+        <article class="vehiculo">
+          <div class="foto">
+            <span class="insignia ${v.estado === 'Usado' ? 'usado' : ''}">${v.estado}</span>
+            <span>${v.emoji}</span>
+            <img src="${v.img}" alt="${v.nombre}" onerror="this.remove()">
+          </div>
+          <div class="cuerpo">
             <h3>${v.nombre}</h3>
-            <div class="tipo">${v.tipo}</div>
-            <div class="precio">${formato(v.precio)}</div>
+            <div class="chips"><span>${v.anio}</span><span>${v.km}</span><span>${v.comb}</span><span>${v.trans}</span></div>
+            <div class="pie">
+              <div class="precio">${formato(v.precio)}</div>
+              <a href="#contacto">Cotizar</a>
+            </div>
           </div>
         </article>`).join('');
 
